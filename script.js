@@ -1,53 +1,55 @@
-class BlockFeature {
-    constructor(color) {
-        this.blockSize = 28;
-        this.color = color;
+class Color {
+    constructor(type) {
+        this.type = type;
+    }
 
+    get color(){
+        return this.type;
     }
 }
 
-class Field extends BlockFeature {
+class Field extends Color {
     constructor() {
         super('white')
         this.cols = 34;
         this.rows = 19;
+        this.blockSize = 28;
     }
 }
 
-const field = new Field()
-
-
-class Coordinates extends BlockFeature {
-    constructor(x, y, color) {
-        super(color);
+class Coordinates {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
     }
 }
 
-class Snake extends Coordinates {
-    constructor() {
-        super(0, 0, '#2eb82e')
+class Snake extends Color{
+    constructor(coordinates) {
+        super('#2eb82e');
+        this.x = coordinates.x;
+        this.y = coordinates.y;
         this.speedX = 0;
         this.speedY = 0;
     }
 }
 
-const snake = new Snake();
-
-const snakeBody = [];
-
-class Food extends Coordinates {
-    constructor() {
-        super(0, 0, './img/strawberry5.png');
+class Food {
+    constructor(coordinates){
+        this.x = coordinates.x;
+        this.y = coordinates.y;
         this.image = new Image();
-        this.image.src = this.color;
+        this.image.src = './img/strawberry5.png';
     }
 }
 
-const food = new Food();
+const field = new Field();
 
+const food = new Food(new Coordinates(0, 0));
 
+const snake = new Snake(new Coordinates(0, 0));
+
+const snakeBody = [];
 
 const minsOutput = document.getElementById("mins");
 const secondsOutput = document.getElementById("sec");
@@ -91,24 +93,24 @@ const score = document.querySelector('.score-number');
 let currentScore = 0;
 
 
-// function setIntervalTime() {
-//     let intervalTime = 0;
-//     if (currentScore < 5) {
-//         intervalTime = 210;
+function setIntervalTime() {
+    let intervalTime = 0;
+    if (currentScore < 5) {
+        intervalTime = 210;
 
-//     } else if (currentScore >= 5 && currentScore < 10) {
-//         intervalTime = 180
+    } else if (currentScore >= 5 && currentScore < 10) {
+        intervalTime = 180
 
-//     } else if (currentScore >= 10 && currentScore < 15) {
-//         intervalTime = 150
-//     } else if (currentScore >= 15) {
-//         intervalTime = 120
-//     }
+    } else if (currentScore >= 10 && currentScore < 20) {
+        intervalTime = 140
+    } else if (currentScore >= 20) {
+        intervalTime = 100
+    }
 
-//     return intervalTime
-// }
+    return intervalTime
+}
 
-
+let intervalStartGameTime;
 window.onload = function () {
     canvas = document.getElementById('field')
     canvas.height = field.rows * field.blockSize;
@@ -121,8 +123,8 @@ window.onload = function () {
 
 
 
-    // setInterval(gameUpdate, setIntervalTime());
-    setInterval(gameUpdate, 120);
+    intervalStartGameTime = setInterval(gameUpdate, setIntervalTime());
+    // setInterval(gameUpdate, 120);
 
 }
 
@@ -147,6 +149,11 @@ function gameUpdate() {
 
         currentScore++ //як раз тут і оновлюється currentScore
         score.innerHTML = currentScore;
+
+        if(intervalStartGameTime) {
+            clearInterval(intervalStartGameTime);
+            intervalStartGameTime = setInterval(gameUpdate, setIntervalTime())
+        }
     }
 
 
