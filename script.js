@@ -39,7 +39,7 @@ const snakeBody = [];
 
 class Food extends Coordinates {
     constructor() {
-        super(0, 0, 'img/strawberry5.png');
+        super(0, 0, './img/strawberry5.png');
         this.image = new Image();
         this.image.src = this.color;
     }
