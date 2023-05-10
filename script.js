@@ -111,8 +111,9 @@ function setIntervalTime() {
 }
 
 let intervalStartGameTime;
+const canvas = document.getElementById('field')
 window.onload = function () {
-    canvas = document.getElementById('field')
+    
     canvas.height = field.rows * field.blockSize;
     canvas.width = field.cols * field.blockSize;
     this.context = canvas.getContext("2d");
@@ -124,7 +125,6 @@ window.onload = function () {
 
 
     intervalStartGameTime = setInterval(gameUpdate, setIntervalTime());
-    // setInterval(gameUpdate, 120);
 
 }
 
@@ -142,12 +142,11 @@ function gameUpdate() {
 
     context.drawImage(food.image, food.x, food.y, field.blockSize, field.blockSize);
 
-    //умова, якщо змія з'їла їжу 
-    if (snake.x == food.x && snake.y == food.y) {
+    if (snake.x === food.x && snake.y === food.y) {
         snakeBody.push([snake.x, snake.y])
         setFoodPosition()
 
-        currentScore++ //як раз тут і оновлюється currentScore
+        currentScore++ 
         score.innerHTML = currentScore;
 
         if(intervalStartGameTime) {
@@ -178,7 +177,6 @@ function gameUpdate() {
     const gameOverScore = document.getElementById('final-score');
     const gameOverTime = document.getElementById('time');
 
-    //умова якщо змія вийшла за поле
     if (snake.x < 0 || snake.x > field.cols * field.blockSize || snake.y < 0 || snake.y > field.rows * field.blockSize) {
         gameOver = true;
         gameOverMessage.style.visibility = 'visible'
@@ -187,9 +185,8 @@ function gameUpdate() {
         gameOverTime.innerHTML = minsOutput.innerHTML + ':' + secondsOutput.innerHTML;
     }
 
-    //якщо змія зіштовхнулася з собою
     for (let i = 0; i < snakeBody.length; i++) {
-        if (snake.x == snakeBody[i][0] && snake.y == snakeBody[i][1]) {
+        if (snake.x === snakeBody[i][0] && snake.y === snakeBody[i][1]) {
             gameOver = true;
             gameOverMessage.style.visibility = 'visible'
 
@@ -222,18 +219,18 @@ function setFoodPosition() {
 
 
 function snakeMovement(e) {
-    if ((e.code == "ArrowUp" || e.code == "KeyW") && snake.speedY != 1) {
+    if ((e.code === "ArrowUp" || e.code === "KeyW") && snake.speedY != 1) {
         snake.speedX = 0;
         snake.speedY = -1;
-    } else if ((e.code == "ArrowDown" || e.code == "KeyS") && snake.speedY != -1) {
+    } else if ((e.code === "ArrowDown" || e.code === "KeyS") && snake.speedY != -1) {
         snake.speedX = 0;
         snake.speedY = 1;
     }
-    else if ((e.code == "ArrowLeft" || e.code == "KeyA") && snake.speedX != 1) {
+    else if ((e.code === "ArrowLeft" || e.code === "KeyA") && snake.speedX != 1) {
         snake.speedX = -1;
         snake.speedY = 0;
     }
-    else if ((e.code == "ArrowRight" || e.code == "KeyD") && snake.speedX != -1) {
+    else if ((e.code === "ArrowRight" || e.code === "KeyD") && snake.speedX != -1) {
         snake.speedX = 1;
         snake.speedY = 0;
     }
