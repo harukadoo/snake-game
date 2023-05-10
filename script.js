@@ -250,3 +250,5 @@ restartBtn.addEventListener('click', () => {
     location.reload()
 
 });
+
+
