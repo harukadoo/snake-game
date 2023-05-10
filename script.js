@@ -222,7 +222,7 @@ function snakeMovement(e) {
     if ((e.code === "ArrowUp" || e.code === "KeyW") && snake.speedY != 1) {
         snake.speedX = 0;
         snake.speedY = -1;
-    } else if ((e.code === "ArrowDown" || e.code === "KeyS") && snake.speedY != -1) {
+    } else if ((e.code === "ArrowDown" || e.code === "KeyJ") && snake.speedY != -1) {
         snake.speedX = 0;
         snake.speedY = 1;
     }
