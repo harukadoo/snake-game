@@ -1,2 +1,2 @@
 ### snake game
-![project image](/img/readm-img.jpg)
+![project image](/img/readme-img.jpg)
